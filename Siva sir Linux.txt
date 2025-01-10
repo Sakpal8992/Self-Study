@@ -1,0 +1,429 @@
+What is server?
+
+Computation power
+
+OS --> AWS Linux 2
+RAM --> 1GB
+CPU/Processor --> 1CPU
+HD --> 8GB
+
+Server --> Only purpose i.e. Host application
+OS  
+RAM 
+CPU/Processor 
+More HD
+
+Operating System Architecture
+-----------------------------
+Application --> OS --> Hardware
+
+Linux
+Less cost
+More performance
+More stability
+Free OS
+Security -> Unix principle
+
+Linux Server --> Everything is text
+
+os consist of
+Kernel --> heart of OS
+Shell
+Utilities --> Packages
+
+How to connect Linux Server
+---------------------------
+Authentication and Authorization
+
+What you Know --> password
+What you have --> RSA key, Tokens
+What you are --> Fingerprints, palm, Retina
+
+public key and private key in linux
+code to create it --> ssh-keygen -f <file-name> tne enter 3 times then it wil be in user directry
+-----------------
+it will give 2 files -->public key, private key(private key are always saved in .pem file format) 
+
+ssh --> secure shell protocol
+22 (port no)
+
+protocol port-no IP-address username password/privatekey
+
+https://www.facebook.com:443(its default protocol no)
+HTTPS 443 facebook.com username password
+
+HTTP 80
+MySQL 3306 
+DNS 53
+SMTP 25
+tomcat 8080
+
+Create Linux Server
+-------------------
+Go to EC2
+
+1. Create a firewall/Security group
+create new security group
+select default vpc // inbound rule 0-6335
+
+3.Import Public Key pair
+Import setting --> name anything --> give public key --> import key pair
+
+2.Instances
+launch instances --> select AWS linux2 --> netwok same -->select default storage then hit 
+launch instances
+DONE
+
+ip address
+
+syntax to connect
+-----------------
+ssh -i <private-key-path> username@IP
+
+$ -->normal user
+# -->Root/Admin user
+pwd --> present working directory
+
+[command-name] [options] [input]
+
+[options] [input] --> optional
+
+uname --> lernel name
+-<single character> = --<word>
+
+[command name] --help
+
+man uname --> manual
+
+up arrow --> will give you history
+
+ls --> list files and directories
+d --> directory
+- --> file
+
+ls --> list files and directories
+ls -l --> lengthy format
+ls -lr --> reverse alpha order
+ls -ltr --> reverse time order
+ls -la --> list including hidden file and folder
+
+CRUD --> Create Read Update Delete
+
+Create
+------
+file --> touch
+folder --> mkdir 
+Cat > file-name
+enter text
+enter + ctrl + D 
+
+cat > example.txt
+
+em <file name> --> removes the file
+rmdir -->only removes empty directories
+-r --> recursive i.e. inside as well
+
+absolute path --> /home/ec2-user/example/
+relative path --> example
+ > --> removes the old content and enter new content
+ >> --> append to the old content
+ 
+copy command
+------------
+copy source destnation
+cp --> copy any file
+mv --> move any file to
+
+Lesson 2
+--------
+grep --> to find the text in a file
+cmd line grep <word-to-find> <file-name>
+Linux is case sensitive
+grep -i will become insensitive
+
+pipes are denoted by | in linux
+                     -
+					 
+head <file-name> --> first 10 line if file by default
+tail <file-name> --> last 10 lines of the file by dafault
+
+head -n 2 <file name> --> first 2 line of the file
+
+wget curl
+---  ----
+
+wget --> download file
+
+wget <URL> 
+
+curl <URL> --> it will print the file in the terminal 
+
+cut awk
+--- ---
+
+cut command is used to cut the string based on some delimiter(ex. /, : etc)
+
+/
+
+cut -d : -f 1    cmd line for cut
+
+awk -F "/" '(print $1F)'
+awk -F "/" '(print $NF)'
+
+column paste
+
+editors
+--------
+VIM editors
+
+Visually improved
+
+vim file-name --> if the does not exists, it will create and open 
+if exist it will open direct
+
+when open the file by default you will in esc modes
+
+vim has 3 modes
+colon/cmd modes --> press : to enter 
+colon option -->
+-------------
+
+:/<word-to-find> --> it will searchfor the word from top
+search hit BOTTOM, co ntinuing at
+
+search from TOP
+search from BOTTOM
+
+:? <word-to-find> --> it will search for the word from bottom
+
+:noh --> it will unhighlight previous search code
+
+:set nu --> to set the line no for file 
+
+:set nonoh --> to unset the line no
+
+:q --> quit the file comeout of the file
+
+:q! --> it will not write what you entered and quit
+
+:wq --> it will write what you entered and quit
+:s/word-to-find/word-to-replace
+
+sbin --> sbin-1
+
+:s/sbin/sbin-1
+it will only substitute the line where your cursir is in
+:2s/sbin/sbin-1
+:%s/sbin/sbin-1/g it will apply changes to whole document
+
+ESC modes
+---------
+
+esc modes --> press esc to enter and exit
+u --> to undo 
+yy --> yank/copy --> copies the line
+p --> paste the line
+dd --> cut the line
+10p --> paste for 10times
+if you are in middle of the file, want to go to top g 2 times
+shift+g --> takes us to bottom
+
+insert modes --> press i to enter
+
+Permission in linux
+----------------------
+R --> Read
+W --> Write
+X --> Execute
+
+user/owner[u] --> the person who created the file
+Group[g] --> Generally the group user belongs to or any group
+Others[o] --> other than user and group
+
+-  rw-      r--    r-- 1    ec2-user  ec2-user   1234 AAA 1 10:00 passwd
+  <user>  <group> <others>   <user>   <group>
+  
+When you create user in Linus by default a group on the same user-name is get created
+Ramesh --> DevOps Guy
+devops --> remesh is part of group
+
+-  rw-      r--    r-- 1  ramesh devops   1234 AAA 1 1:00 passwd
+
+who can permission of a file. Either owner or root user.
+chmod u+x <file-name> --> to add 
+chmod U-x <file-name> --> to remove
+
+R -->4
+W -->2
+X -->1
+
+chmod 750 <file-name>
+
+public and prvate key should not have permission more than 600
+
+
+Lesson 3
+------------
+
+User Management
+----------------
+create user 
+giving password to user
+reading the user information
+updating the server
+
+for root always user id is 0.
+here is also CRUD
+--------------------
+create user 
+useradd <user-name>
+Linux will start creating user from 1000, below 1000 are system user....
+/etc/passwd --> user information
+getent password
+
+create password
+passwd <user-name>
+
+user should login to system
+
+ssh -i <private-key> user-name@IP
+
+linux disabled passwor authentication, how to enable password authentication??
+
+/etc/ssh/sshd_config
+sshd_config is a crucial file, you should not mistake here
+
+we take backup of ssh_config
+edit the file /etc/ssh/sshd_config
+sshd -t --> will check for the syntax
+
+systemctl restart sshd
+
+a taem called devops is there, you will be added to devops group
+
+creat a group
+---------------
+Whenever you create user a group also created on same username
+1. Primary group --> devops
+2. Secondary group --> testers
+
+groupadd <group-name>
+
+we want to add user to the devops
+
+usermod -g <group-name> <user-name>
+
+create another group testers, and add testers as secondary group to user
+
+groupadd testers
+
+getent group --> will show the information on groups
+
+usermod -aG testers user
+
+gpasswd -d <user-name> <group-name>
+
+ssh key authentication to user
+------------------------------
+user have to create his public and private key
+
+share public key to admin
+create a directory inside home folder of user
+
+chmod 700 .ssh
+create a file called authorised_key, paste public key of user
+R -->4
+W -->2
+X -->
+
+600 or 400
+red and write to user
+no access to group
+no access to others
+
+ownership
+-----------
+change the ownership to user
+chown <user>:<group> file name
+
+user is leaving organisation
+-----------------------------
+we need to remove him from devops group
+we need to delete the user
+   userdel user
+   
+you cant delete user from primary group  
+  first you need to change his primary group to his own group
+  
+delete group
+-------------
+groupdel <group-name>
+you can only delete the group if it has no user
+first you should remove users from group then delete
+
+Process Management
+-------------------
+joindevops.com
+everything in this world is a process if you want best result you need to follow 
+process
+
+I am the root, user is the root
+
+DAWS-70
+------------------
+I am the root user is root, process Instance ID 0
+   chat support should reply to chat 
+   for every msg they one task
+     for examle ramesh sent a msg now chat support team task will be start. we will 
+     create one tadk id, once chat support team complete response their task is 
+	 ended.
+     100 is task id it is completed. Once task is completed they should report to 
+	 root
+	 task id is 100, parent task is 0 
+	 PID is 100, PPID is 0
+   call support team should respond to call   
+   
+everything in linux is process, for that PID is created
+
+list down the proess command is ps
+
+DevOps team
+  DevOps Team Leader - 0
+    Senior DevOps Engineer
+	    PID is 1 
+		PPID is 0
+	Junior DevOps Engineer
+	    PID is 2
+		PPID is 1
+	DevOps Trainee
+        PID is 3 
+        PPID is 2
+ps -ef --> you are teling linux to give the result of ps -ef
+
+first it will create PID --> xxxx
+xxxx is the PPID
+
+1. Foreground Process
+2. Background Process  sleep 100 &
+
+kill <PID> --> you are requesting to end task
+
+kill -i <PID> --> you are forcing to end the task
+
+
+
+
+Package Management
+----------------------
+ubntu -> apt-get
+centos -> yum
+aws linux 2 --> amazon-linux-extra and yum
+
+I want to install package called git
+
+sudo amazon-linux-extra
+
+user task will end when batch ends
+
+
+
